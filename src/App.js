@@ -114,7 +114,7 @@ class App extends Component {
 	
 }
 	render() {
-		let playlistToRenter = this.state.serverData.user ? this.state.serverData.user.playlists
+		let playlistToRender = this.state.serverData.user ? this.state.serverData.user.playlists
 		.filter(playlist => 
 			playlist.name.toLowerCase().includes(this.state.filterString)
 			) : []
@@ -126,11 +126,11 @@ class App extends Component {
 		   <div>
         	<h1 style={{...defaultStyle, 'font-size': '34px'}}>Przeboje uzytkownika {this.state.serverData.user.name}
 			</h1>
-			<PlaylistCounter playlists={playlistToRenter}   />
-        	<HourCounter playlists={playlistToRenter} />
+			<PlaylistCounter playlists={playlistToRender}   />
+        	<HourCounter playlists={playlistToRender} />
         <Filter onTextChange={text => this.setState({filterString: text})} />
 		{
-			playlistToRenter.map((playlist) =>
+			playlistToRender.map((playlist) =>
 				<Playlist playlist={playlist} />
 			)
 		}
