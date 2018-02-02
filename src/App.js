@@ -102,17 +102,23 @@ class App extends Component {
 
 	constructor() {
 		super();
-		this.state = {serverData: {}}
-	}
+		this.state = {
+			serverData: {},
+	        filterString: ''
+}
+}
   		componentDidMount() {
 		setTimeout(() => {
 		this.setState({serverData: fakeServerData});
 		}, 1000);
-		setTimeout(() => {
-			this.setState({filterString: ''});
-			}, 2000);
+	
 }
 	render() {
+		let playlistToRenter = this.state.serverData.user ? this.state.serverData.user.playlists
+		.filter(playlist => 
+			playlist.name.toLowerCase().includes(this.state.filterString)
+			) : []
+
     return (
       <div className="App">
 
@@ -120,15 +126,11 @@ class App extends Component {
 		   <div>
         	<h1 style={{...defaultStyle, 'font-size': '34px'}}>Przeboje uzytkownika {this.state.serverData.user.name}
 			</h1>
-			<PlaylistCounter playlists={
-			this.state.serverData.user.playlists}   />
-        	<HourCounter playlists={
-			this.state.serverData.user.playlists} />
+			<PlaylistCounter playlists={playlistToRenter}   />
+        	<HourCounter playlists={playlistToRenter} />
         <Filter onTextChange={text => this.setState({filterString: text})} />
 		{
-			this.state.serverData.user.playlists.filter(playlist => 
-			playlist.name.toLowerCase().includes(this.state.filterString)
-			).map((playlist) =>
+			playlistToRenter.map((playlist) =>
 				<Playlist playlist={playlist} />
 			)
 		}
