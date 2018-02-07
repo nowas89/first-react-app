@@ -103,7 +103,7 @@ class App extends Component {
     }).then(response => response.json())
     .then(playlistData => {
       let playlists = playlistData.items
-      let trackDataPromises = playlists.map(playlist => {
+      let trackDataPromises = playlistData.items.map(playlist => {
         let responsePromise = fetch(playlist.tracks.href, {
           headers: {'Authorization': 'Bearer ' + accessToken}
         })
